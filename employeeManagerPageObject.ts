@@ -16,7 +16,7 @@ class BasePageObject {
   url: string | undefined;
   constructor({ driver, url }: BasePageOptions) {
     this.driver =
-      driver || new Builder().withCapabilities(Capabilities.chrome).build();
+      driver || new Builder().withCapabilities(Capabilities.chrome()).build();
     this.url = url || undefined;
   }
   async navigate(url?: string) {
@@ -53,7 +53,7 @@ export class EmployeeManagerPageObject extends BasePageObject {
   addEmployeeButton = By.name("addEmployee");
   nameInput = By.name("nameEntry");
   phoneInput = By.name("phoneEntry");
-  titleInput = By.name("titleInput");
+  titleInput = By.name("titleEntry");
   newEmployeeListItem = By.name("employee11");
   constructor(url: string) {
     super({ url });
@@ -65,19 +65,19 @@ export class EmployeeManagerPageObject extends BasePageObject {
     await this.click(this.newEmployeeListItem);
   }
   async getEmployeeName() {
-    return await this.getText(this.nameInput);
+    return await this.getAttribute(this.nameInput, "value");
   }
   async editEmployeeName(name: string) {
     await this.setInput(this.nameInput, name);
   }
   async getEmployeePhone() {
-    return await this.getText(this.phoneInput);
+    return await this.getAttribute(this.phoneInput, "value");
   }
   async editEmployeePhone(phone: number) {
     await this.setInput(this.phoneInput, phone);
   }
   async getEmployeeTitle() {
-    return await this.getText(this.titleInput);
+    return await this.getAttribute(this.titleInput, "value");
   }
   async editEmployeeTitle(title: string) {
     await this.setInput(this.titleInput, title);
